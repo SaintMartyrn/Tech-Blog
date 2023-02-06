@@ -1,23 +1,50 @@
-<section class="single-post-container">
-{{> post-info post}}
-
-{{#if loggedIn}}
-<div class="comment-container">
-    <h3 class="card-header"></h3>
-    <form class="card-body comment-form" id="comment-form">
-    <div class="form-row">
-        <label class="form-label">Comment</label>
-        <input id="comment" name="comment-body" class="form-input  form-control" />
+<ol>
+    <li class='row border'>
+        <article class='col-10'>
+            <div id='blog-header' class='row'>
+                <div class='col-1'>
+                    <h2>{{post.title}}</h2>
+                </div>
+                <div class="col-1">
+                    <span>Posted by {{post.user.username}} on {{format_date post.created_at}}</span>
+                </div>
+            </div>
+            <div id='blog-content' class='row'>
+                <div class="col-10">
+                    <p>{{post.post_content}}</p>
+                </div>
+            </div>
+        </article>
+    </li>
+</ol>
+<div class='row border'>
+    <div class="col-10">
+        {{#each post.comments}}
+        <section id='comments' class="row">
+            <div class='col-10'>
+                <p>{{comment_text}}</p>
+            </div>
+            <div class='col-10'>
+                <p>-{{user.username}} on {{format_date created_at}}</p>
+            </div>
+        </section>
+        {{/each}}
     </div>
-        <button type="submit" class="btn">Submit</button>
-    </form>
 </div>
-{{/if}}
-
-{{> comments post.comments}}
-
-</section>
-
 {{#if loggedIn}}
-<script src="/js/comment.js"></script>
+<form id='comment-form'>
+    <div id='comment-form-div' class="row border">
+        <div class="col-10">
+            <label for='new-comment'>Comment</label>
+        </div>
+        <div class="col-10">
+            <textarea placeholder='Enter comment here...' name='new-comment' id='new-comment'
+                form='comment-form'></textarea>
+        </div>
+        <div class="col-10">
+            <button id='submit-button' type='submit'>Submit</button>
+        </div>
+    </div>
+</form>
+<script src="/javascript/add-comment.js"></script>
 {{/if}}
